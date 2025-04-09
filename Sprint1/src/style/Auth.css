@@ -1,0 +1,163 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  justify-content: center;
+  
+}
+
+/* Main container */
+.auth-container {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  min-height: 100vh;
+  background: #f8fafc;
+  padding: 20px; /* Add some padding for mobile */
+}
+
+
+/* Auth box - now more compact */
+.auth-box {
+  width: 380px; /* Fixed width */
+  padding: 32px 40px; /* Compact padding */
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  color: #334155;
+}
+
+/* Logo */
+.logo {
+  text-align: center;
+  margin-bottom: 16px;
+  color: #4F46E5;
+  font-size: 24px;
+}
+
+/* Headings */
+.auth-box h2 {
+  margin: 0 0 8px;
+  text-align: center;
+  color: #1e293b;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.subtitle {
+  color: #64748b;
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+/* Input fields */
+.input-group {
+  margin-bottom: 16px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #4F46E5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1);
+}
+
+/* Remember me section */
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 16px 0;
+  font-size: 14px;
+}
+
+.remember {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #475569;
+}
+
+.forgot-password {
+  color: #4F46E5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Submit button */
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  background: #4F46E5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  margin: 16px 0;
+  cursor: pointer;
+}
+
+/* Divider */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Social buttons */
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.social-btn {
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Auth link */
+.auth-link {
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.auth-link a {
+  color: #4F46E5;
+  text-decoration: none;
+  font-weight: 500;
+}
