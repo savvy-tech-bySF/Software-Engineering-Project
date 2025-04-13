@@ -1,0 +1,108 @@
+/* Feedback Page Styles */
+.feedback-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .feedback-container h1 {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #1e293b;
+  }
+  
+  .pr-id-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .pr-id-section h2 {
+    font-size: 1.2rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+  }
+  
+  .pr-id {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #4F46E5;
+  }
+  
+  .repo-info {
+    margin-bottom: 1.5rem;
+  }
+  
+  .repo-info p {
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+  }
+  
+  .repo-link {
+    color: #4F46E5;
+    text-decoration: none;
+    word-break: break-all;
+  }
+  
+  .repo-link:hover {
+    text-decoration: underline;
+  }
+  
+  .divider {
+    height: 1px;
+    background-color: #e2e8f0;
+    margin: 1.5rem 0;
+  }
+  
+  .description-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .description-section h3 {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
+  
+  .description-text {
+    color: #64748b;
+    line-height: 1.5;
+  }
+  
+  .file-upload {
+    border: 2px dashed #e2e8f0;
+    border-radius: 8px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    background-color: #f8fafc;
+  }
+  
+  .drag-drop-message {
+    color: #64748b;
+    font-size: 1rem;
+  }
+  
+  .submit-button {
+    background-color: #4F46E5;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .submit-button:hover {
+    background-color: #4338ca;
+  }
+  
+  @media (max-width: 768px) {
+    .feedback-container {
+      padding: 1.5rem;
+      margin: 1rem;
+    }
+  }

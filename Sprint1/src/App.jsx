@@ -4,6 +4,7 @@ import ForgotPassword from './Components/ForgotPassword.jsx';
 import Login from './Components/Login.jsx';
 import HorizontalNavbar from './Components/HorizontalNavbar.jsx';
 import Registration from './Components/Registration.jsx';
+import FeedbackPage from './Components/FeedBack.jsx';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function MyApp() {
@@ -20,6 +21,12 @@ function MyApp() {
           <>
             <HorizontalNavbar />
             <Dashboard />
+          </>
+        } />
+        <Route path="/feedback" element={
+          <>
+            <HorizontalNavbar />
+            <FeedbackPage />
           </>
         } />
       </Routes>
