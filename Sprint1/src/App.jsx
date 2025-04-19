@@ -1,11 +1,12 @@
-import './App.css';
+import './App.css'
 import Dashboard from './Components/Dashboard.jsx';
 import ForgotPassword from './Components/ForgotPassword.jsx';
 import Login from './Components/Login.jsx';
 import HorizontalNavbar from './Components/HorizontalNavbar.jsx';
 import Registration from './Components/Registration.jsx';
 import FeedbackPage from './Components/FeedBack.jsx';
-import ReviewCode from './Components/ReviewCode.jsx';  // Add this import
+import ReviewCode from './Components/ReviewCode.jsx';
+import Leaderboard from './Components/LeaderBoard.jsx';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function MyApp() {
@@ -30,10 +31,16 @@ function MyApp() {
             <FeedbackPage />
           </>
         } />
-        <Route path="/review-code" element={  // Add this route
+        <Route path="/review-code" element={
           <>
             <HorizontalNavbar />
             <ReviewCode />
+          </>
+        } />
+        <Route path="/leaderboard" element={
+          <>
+            <HorizontalNavbar />
+            <Leaderboard />
           </>
         } />
       </Routes>
@@ -41,4 +48,4 @@ function MyApp() {
   )
 }
 
-export default MyApp;
+export default MyApp
