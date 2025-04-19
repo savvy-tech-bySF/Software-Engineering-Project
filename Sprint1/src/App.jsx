@@ -1,10 +1,11 @@
-import './App.css'
+import './App.css';
 import Dashboard from './Components/Dashboard.jsx';
 import ForgotPassword from './Components/ForgotPassword.jsx';
 import Login from './Components/Login.jsx';
 import HorizontalNavbar from './Components/HorizontalNavbar.jsx';
 import Registration from './Components/Registration.jsx';
 import FeedbackPage from './Components/FeedBack.jsx';
+import ReviewCode from './Components/ReviewCode.jsx';  // Add this import
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function MyApp() {
@@ -29,9 +30,15 @@ function MyApp() {
             <FeedbackPage />
           </>
         } />
+        <Route path="/review-code" element={  // Add this route
+          <>
+            <HorizontalNavbar />
+            <ReviewCode />
+          </>
+        } />
       </Routes>
     </BrowserRouter>
   )
 }
 
-export default MyApp
+export default MyApp;

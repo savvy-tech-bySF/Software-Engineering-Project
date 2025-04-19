@@ -81,3 +81,7 @@ body {
 .form p {
   text-align: center;
 }
+.page-content {
+  padding-top: 80px; /* Navbar height + some extra space */
+  min-height: calc(100vh - 80px);
+}
