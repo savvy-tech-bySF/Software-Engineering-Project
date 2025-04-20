@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CodeQuest – Dashboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Page Layout */
+    .page {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    /* Top Nav */
+    .topnav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+    .topnav .logo {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+    .topnav nav a {
+      margin: 0 1rem;
+      color: #374151;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .topnav nav a.active {
+      color: #5c6ac4;
+    }
+    .topnav .profile {
+      width: 2rem; height: 2rem;
+      border-radius: 50%;
+      background: url('assets/profile.png') center/cover no-repeat;
+      cursor: pointer;
+    }
+
+    /* Greeting Subtitle */
+    .subtitle {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #6b7280;
+      margin-top: 0.25rem;
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+
+    /* Stats Cards */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: #fff;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+    .stat-card h3 {
+      font-size: 2rem;
+      margin-bottom: 0.25rem;
+      color: #111827;
+    }
+    .stat-card p {
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+
+    /* Two-column main */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+    .card-list, .card-box {
+      background: #fff;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .card-list h2, .card-box h2 {
+      font-size: 1.125rem;
+      margin-bottom: 1rem;
+      color: #111827;
+    }
+
+    /* Pending Reviews */
+    .pending-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .pending-item:last-child { border: none; }
+    .pending-item .info {
+      display: flex;
+      align-items: center;
+    }
+    .pending-item .info img {
+      width: 2rem; height: 2rem;
+      border-radius: 50%;
+      margin-right: 0.75rem;
+    }
+    .pending-item .info .text {
+      display: flex; flex-direction: column;
+    }
+    .pending-item .info .text span:first-child {
+      font-weight: 500; color: #111827;
+    }
+    .pending-item .info .text span:last-child {
+      font-size: 0.75rem; color: #6b7280;
+    }
+    .pending-item .action button {
+      background: #5c6ac4; color: #fff;
+      border: none; padding: 0.5rem 1rem;
+      border-radius: 0.5rem; cursor: pointer;
+    }
+
+    /* Badges */
+    .badges {
+      display: flex;
+      gap: 0.5rem;
+    }
+    .badges .badge {
+      flex: 1;
+      background: #f9fafb;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #374151;
+    }
+
+    /* Recent Activity */
+    .activity-item {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .activity-item:last-child { border: none; }
+    .activity-item .icon {
+      width: 1.5rem; height: 1.5rem;
+      margin-right: 0.75rem;
+    }
+    .activity-item .text {
+      flex: 1;
+      font-size: 0.875rem;
+      color: #374151;
+    }
+    .activity-item .text span {
+      display: block;
+    }
+    .activity-item .text span:last-child {
+      font-size: 0.75rem; color: #6b7280;
+    }
+
+    /* Table */
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    .table th, .table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .table th {
+      color: #6b7280;
+      font-weight: 500;
+    }
+    .table td .status {
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      color: #fff;
+    }
+    .status.in-progress { background: #f59e0b; }
+    .status.completed  { background: #10b981; }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-container">
+          {% for category, msg in messages %}
+            <div class="flash {{ category }}">{{ msg }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+
+  <div class="page">
+    <!-- Top Navigation -->
+    <header class="topnav">
+      <div class="logo">&lt;/&gt; CodeQuest</div>
+      <nav>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="get-feedback.html">Get Feedback</a>
+        <a href="review-code.html">Review Code</a>
+        <a href="leaderboard.html">Leaderboard</a>
+      </nav>
+      <div class="profile"></div>
+    </header>
+
+    <!-- Greeting -->
+    <h2>Welcome back!</h2>
+    <p class="subtitle">Your code review stats this month</p>
+
+    <!-- Stats Cards -->
+    <section class="stats">
+      <div class="stat-card">
+        <h3>24</h3><p>Code Reviews</p>
+      </div>
+      <div class="stat-card">
+        <h3>156</h3><p>Points Earned</p>
+      </div>
+      <div class="stat-card">
+        <h3>8</h3><p>Badges Earned</p>
+      </div>
+      <div class="stat-card">
+        <h3>#3</h3><p>Rank</p>
+      </div>
+    </section>
+
+    <!-- Main Two-Column -->
+    <div class="main-grid">
+      <!-- Left Column -->
+      <div>
+        <!-- Pending Reviews -->
+        <div class="card-list">
+          <h2>Your Pending Reviews</h2>
+          <div class="pending-item">
+            <div class="info">
+              <img src="assets/avatar1.png" alt="">
+              <div class="text">
+                <span>Authentication Service Update</span>
+                <span>by Mike Chen · 2h ago</span>
+              </div>
+            </div>
+            <div class="action">
+              <button>Review</button>
+            </div>
+          </div>
+          <div class="pending-item">
+            <div class="info">
+              <img src="assets/avatar2.png" alt="">
+              <div class="text">
+                <span>API Endpoint Optimization</span>
+                <span>by Sarah Lee · 4h ago</span>
+              </div>
+            </div>
+            <div class="action">
+              <button>Review</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="card-list" style="margin-top:1.5rem">
+          <h2>Recent Activity</h2>
+          <div class="activity-item">
+            <img class="icon" src="assets/check.png" alt="">
+            <div class="text">
+              <span>Completed Review: Database Schema Changes</span>
+              <span>You earned 5 points · 1h ago</span>
+            </div>
+          </div>
+          <div class="activity-item">
+            <img class="icon" src="assets/badge.png" alt="">
+            <div class="text">
+              <span>Earned Badge: Code Guru</span>
+              <span>Completed 50 reviews · 3h ago</span>
+            </div>
+          </div>
+          <div class="activity-item">
+            <img class="icon" src="assets/comment.png" alt="">
+            <div class="text">
+              <span>New Comment on Your Review</span>
+              <span>From David Wang · 5h ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div>
+        <!-- Your Badges -->
+        <div class="card-box">
+          <h2>Your Badges</h2>
+          <div class="badges">
+            <div class="badge">⭐ Top Reviewer</div>
+            <div class="badge">⚡ Quick Response</div>
+            <div class="badge">✔️ Consistent</div>
+          </div>
+        </div>
+
+        <!-- Top Reviewers -->
+        <div class="card-box" style="margin-top:1.5rem">
+          <h2>Top Reviewers</h2>
+          <div class="stat-card" style="box-shadow:none; padding:0; display:flex; justify-content:space-between; align-items:center;">
+            <span>#1 John Doe</span><span>324 pts</span>
+          </div>
+          <div class="stat-card" style="box-shadow:none; padding:0; display:flex; justify-content:space-between; align-items:center;">
+            <span>#2 Emma Wilson</span><span>298 pts</span>
+          </div>
+          <div class="stat-card" style="box-shadow:none; padding:0; display:flex; justify-content:space-between; align-items:center;">
+            <span>#3 Alex Chen</span><span>156 pts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recently Sent for Review -->
+    <div class="card-box">
+      <h2>Recently Sent for Review</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Repository</th>
+            <th>PR ID</th>
+            <th>Status</th>
+            <th>Points</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>frontend/main</td>
+            <td>#1234</td>
+            <td><span class="status in-progress">In Progress</span></td>
+            <td>50</td>
+            <td><a href="#">View Details</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <button class="btn-primary" style="margin-top:1rem; width:auto; padding:0.5rem 1rem;">+ New Review</button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      © 2025 CodeQuest. All rights reserved.
+    </footer>
+  </div>
+</body>
+</html>

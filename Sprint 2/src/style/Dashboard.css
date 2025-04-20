@@ -1,0 +1,291 @@
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* Main Container */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  color: #333;
+}
+
+/* Header */
+.dashboard-header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+/* Content Area */
+.dashboard-content {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Welcome Section */
+.welcome-section {
+  margin-bottom: 2rem;
+}
+
+.welcome-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #1e293b;
+}
+
+.welcome-section p {
+  color: #64748b;
+  margin-bottom: 1.5rem;
+}
+
+/* Stats Cards */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.stat-card h3 {
+  font-size: 1rem;
+  color: #64748b;
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #4F46E5;
+}
+
+/* Two Column Layout */
+.dashboard-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Card Styles (shared) */
+.pending-reviews, 
+.recent-activity, 
+.badges-section, 
+.top-reviewers,
+.sent-reviews {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Section Headings */
+.pending-reviews h3, 
+.recent-activity h3, 
+.sent-reviews h3, 
+.badges-section h3, 
+.top-reviewers h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #1e293b;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* List Styles */
+.review-list, 
+.activity-list, 
+.reviewers-list {
+  list-style: none;
+}
+
+/* List Items */
+.review-list li, 
+.activity-list li, 
+.reviewers-list li {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* List item content wrapper */
+.review-list li > div,
+.activity-list li > div,
+.reviewers-list li > div {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Icons */
+.review-icon, 
+.activity-icon, 
+.reviewer-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  margin-right: 1rem;
+  background: #f1f5f9;
+  border-radius: 50%;
+}
+
+.review-list li:last-child, 
+.activity-list li:last-child, 
+.reviewers-list li:last-child {
+  border-bottom: none;
+}
+
+/* Icons */
+.review-icon, 
+.activity-icon, 
+.reviewer-icon {
+  width: 40px;
+  height: 40px;
+  margin-right: 1rem;
+  background: #f1f5f9;
+  border-radius: 50%;
+}
+
+/* List Item Headings */
+.review-list h4, 
+.activity-list h4, 
+.reviewers-list h4 {
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+/* List Item Text */
+.review-list p, 
+.activity-list p, 
+.reviewers-list p {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+/* Table Section */
+.sent-reviews {
+  margin-bottom: 2rem;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  font-weight: 600;
+  color: #64748b;
+  background: #f8fafc;
+}
+
+/* Button Styles */
+.view-btn {
+  background: #4F46E5;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.875rem;
+}
+
+.view-btn:hover {
+  background: #4338ca;
+}
+
+/* Badges Grid */
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.badge-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+}
+
+.badge-icon {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.5rem;
+  background: #e2e8f0;
+  border-radius: 50%;
+}
+
+.badge-card h4 {
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+/* Footer */
+.dashboard-footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: #64748b;
+  font-size: 0.875rem;
+  border-top: 1px solid #e2e8f0;
+  background: white;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+  /* Stack columns on smaller screens */
+  .dashboard-columns {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Two columns for stats on medium screens */
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  /* Two columns for badges on medium screens */
+  .badges-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Small Mobile Styles */
+@media (max-width: 480px) {
+  /* Single column for stats on small screens */
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  /* Single column for badges on small screens */
+  .badges-grid {
+    grid-template-columns: 1fr;
+  }
+}

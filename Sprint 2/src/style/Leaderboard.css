@@ -1,0 +1,127 @@
+.leaderboard-container {
+  
+  max-width: 100%; /* Changed from 1200px to use full width */
+  margin: 0 auto;
+  padding: 3rem 5rem; /* Increased horizontal padding */
+  padding-top: 6rem; /* Increased top padding to account for navbar */
+  font-family: 'Inter', sans-serif;
+}
+
+.leaderboard-container h1 {
+  margin-bottom: 3rem;
+  color: #1e293b;
+  font-size: 2rem;
+}
+
+/* Top three reviewers section */
+.top-three-container {
+  display: flex;
+  justify-content: space-evenly; /* Changed to space-evenly for better distribution */
+  margin-bottom: 5rem;
+  position: relative;
+  gap: 3rem; /* Increased gap between cards */
+}
+
+.top-reviewer-card {
+  background-color: #f8fafc;
+  border-radius: 12px;
+  padding: 3cm;
+  width: 40%; /* Reduced width to create more space between cards */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+/* Other reviewers list */
+.other-reviewers-list {
+  margin-bottom: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Add space between cards */
+}
+
+.reviewer-row {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem 2rem; /* Add horizontal padding for card feel */
+  border-bottom: none; /* Remove bottom border */
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  margin-bottom: 0; /* Remove margin if using gap above */
+  transition: transform 0.15s;
+}
+
+.reviewer-row:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+}
+
+.rank-indicator {
+  width: 60px; /* Increased width */
+  color: #64748b;
+  font-weight: 500;
+  margin-right: 1rem; /* Added right margin */
+}
+
+.reviewer-avatar.small {
+  margin-right: 2rem; /* Increased right margin */
+  margin-bottom: 0;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* Increased gap between buttons */
+  margin: 4rem 0; /* Increased vertical margins */
+}
+
+.page-btn {
+  width: 2.5rem; /* Larger buttons */
+  height: 2.5rem;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Footer */
+.leaderboard-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5rem; /* Increased top margin */
+  padding-top: 2rem; /* Increased top padding */
+  border-top: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 0.875rem;
+}
+
+.social-icons {
+  display: flex;
+  gap: 2rem; /* Increased gap between icons */
+}
+
+.icon {
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .top-three-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .top-reviewer-card {
+    width: 100%;
+  }
+  
+  .top-reviewer-card.top-rank {
+    order: -1;
+  }
+}

@@ -1,0 +1,51 @@
+import './App.css'
+import Dashboard from './Components/Dashboard.jsx';
+import ForgotPassword from './Components/ForgotPassword.jsx';
+import Login from './Components/Login.jsx';
+import HorizontalNavbar from './Components/HorizontalNavbar.jsx';
+import Registration from './Components/Registration.jsx';
+import FeedbackPage from './Components/FeedBack.jsx';
+import ReviewCode from './Components/ReviewCode.jsx';
+import Leaderboard from './Components/Leaderboard.jsx';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+function MyApp() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Registration />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
+        
+        {/* Protected routes with navbar */}
+        <Route path="/dashboard" element={
+          <>
+            <HorizontalNavbar />
+            <Dashboard />
+          </>
+        } />
+        <Route path="/feedback" element={
+          <>
+            <HorizontalNavbar />
+            <FeedbackPage />
+          </>
+        } />
+        <Route path="/review-code" element={
+          <>
+            <HorizontalNavbar />
+            <ReviewCode />
+          </>
+        } />
+        <Route path="/leaderboard" element={
+          <>
+            <HorizontalNavbar />
+            <Leaderboard />
+          </>
+        } />
+      </Routes>
+    </BrowserRouter>
+  )
+}
+
+export default MyApp

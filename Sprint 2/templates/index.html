@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CodeQuest – Sign In</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="auth-page">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container">
+        {% for category, msg in messages %}
+          <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="card">
+    <div class="close-icon">
+      <img src="assets/close.svg" alt="Close" />
+    </div>
+
+    <div class="header">
+      <h1>Welcome to CodeQuest</h1>
+      <p>Sign in to continue to your dashboard</p>
+    </div>
+
+    <form action="/login" method="post" id="loginForm" class="form">
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+
+      <div class="form-options">
+        <label><input type="checkbox" name="remember" /> Remember me</label>
+        <a href="forgot-password.html">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn-primary">Sign in</button>
+    </form>
+
+    <div class="divider"><span>Or continue with</span></div>
+
+    <div class="oauth-container">
+      <button onclick="oauth('GitHub')" class="btn-oauth">
+        <img src="assets/github.svg" alt="GitHub" class="icon" /> GitHub
+      </button>
+      <button onclick="oauth('GitLab')" class="btn-oauth">
+        <img src="assets/gitlab.svg" alt="GitLab" class="icon" /> GitLab
+      </button>
+    </div>
+
+    <p class="signup-text">
+      Don’t have an account? <a href="signup.html">Sign up</a>
+    </p>
+  </div>
+</body>
+</html>
