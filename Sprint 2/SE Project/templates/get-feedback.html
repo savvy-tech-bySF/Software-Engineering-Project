@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CodeQuest – Get Feedback</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Page Layout */
+    .page {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Top Nav */
+    .topnav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+    .topnav .logo {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+    .topnav nav a {
+      margin: 0 1rem;
+      color: #374151;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .topnav nav a.active {
+      color: #5c6ac4;
+    }
+    .topnav .profile {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: url('assets/profile.png') center/cover no-repeat;
+      cursor: pointer;
+    }
+
+    /* Page Title & Subtitle */
+    .subtitle {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #6b7280;
+      margin-top: 0.25rem;
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+
+    /* Card width */
+    .card {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-group + .form-group {
+      margin-top: 1rem;
+    }
+
+    /* Divider */
+    .divider-simple {
+      display: flex;
+      align-items: center;
+      margin: 1.5rem 0;
+    }
+    .divider-simple::before,
+    .divider-simple::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #e5e7eb;
+    }
+    .divider-simple span {
+      padding: 0 0.5rem;
+      color: #6b7280;
+      font-size: 0.875rem;
+    }
+
+    /* Dropzone */
+    .dropzone {
+      border: 2px dashed #cbd5e1;
+      border-radius: 0.75rem;
+      padding: 2rem;
+      text-align: center;
+      color: #6b7280;
+      cursor: pointer;
+    }
+    .dropzone:hover {
+      background: #f9fafb;
+    }
+    .dropzone svg {
+      width: 2rem;
+      height: 2rem;
+      margin-bottom: 0.5rem;
+      stroke: #5c6ac4;
+    }
+
+    /* Textarea */
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      border: 1px solid #e5e7eb;
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      font-size: 1rem;
+      resize: vertical;
+    }
+
+    /* Button wrapper */
+    .form-actions {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    /* Submit button */
+    .btn-submit {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 0.75rem;
+      background: #5c6ac4;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-submit:hover {
+      background: #4a55a0;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-container">
+      {% for category, msg in messages %}
+        <div class="flash {{ category }}">{{ msg }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+
+  <div class="page">
+    <!-- Top Navigation -->
+    <header class="topnav">
+      <div class="logo">&lt;/&gt; CodeQuest</div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="get-feedback.html" class="active">Get Feedback</a>
+        <a href="review-code.html">Review Code</a>
+        <a href="leaderboard.html">Leaderboard</a>
+      </nav>
+      <div class="profile"></div>
+    </header>
+
+    <!-- Title & Subtitle -->
+
+    <!-- Card -->
+    <div class="card">
+      <form id="prForm" action="{{ url_for('submit_pr') }}" method="post" enctype="multipart/form-data">
+        <h2>Submit Pull Request</h2>
+        <h2> </h2>
+        <div class="form-group">
+          <label for="prId">Pull Request ID</label>
+          <input type="text" id="prId" name="prId" placeholder="#123" required class="form-input">
+        </div>
+
+        <div class="form-group">
+          <label for="repoUrl">Repository URL</label>
+          <input type="url" id="repoUrl" name="repoUrl"
+                 placeholder="https://github.com/username/repository"
+                 class="form-input" required>
+        </div>
+
+        <div class="divider-simple"><span>OR</span></div>
+
+        <div class="dropzone" id="dropzone">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7 16l-4-4m0 0l4-4m-4 4h18"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 12h18"/>
+          </svg>
+          <div>Drag &amp; drop files or <span style="color:#5c6ac4;cursor:pointer">Browse</span></div>
+          <div style="font-size:0.75rem;color:#9ca3af;margin-top:0.25rem">
+            Supported formats: .zip
+          </div>
+          <input type="file" id="fileInput" name="file" accept=".zip" style="display:none" />
+        </div>
+
+        <div class="form-group" style="margin-top:1.5rem">
+          <label for="description">Description</label>
+          <textarea id="description" name="description"
+                    placeholder="Briefly describe your project..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-submit">Submit for Review</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      © 2025 CodeQuest. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    // Dropzone behavior
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropzone.style.background = '#f9fafb';
+    });
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.style.background = 'transparent';
+    });
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.style.background = 'transparent';
+      fileInput.files = e.dataTransfer.files;
+    });
+
+    // Form submit stub
+  </script>
+</body>
+</html>

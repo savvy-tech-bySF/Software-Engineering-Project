@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CodeQuest – Leaderboard</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* Page wrapper */
+    .page {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    /* Top Nav (reuse from other pages) */
+    .topnav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+    .topnav .logo {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+    .topnav nav a {
+      margin: 0 1rem;
+      color: #374151;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .topnav nav a.active {
+      color: #5c6ac4;
+    }
+    .topnav .profile {
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: url('assets/profile.png') center/cover no-repeat;
+      cursor: pointer;
+    }
+
+    /* Top‑3 Cards Container */
+    .top-three {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .top-three .card {
+      flex: 1;
+      background: #fff;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      position: relative;
+      text-align: center;
+    }
+    /* Highlight the #1 card */
+    .top-three .card.center {
+      background: #fef9ec;
+    }
+    .top-three .rank-badge {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #ffd700;
+      color: #fff;
+      width: 1.75rem;
+      height: 1.75rem;
+      border-radius: 50%;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .top-three .avatar {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 0.75rem;
+    }
+    .top-three .name {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #111827;
+    }
+    .top-three .points {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    /* Subsequent list */
+    .list {
+      background: #fff;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 0;
+      list-style: none;
+      margin-bottom: 2rem;
+    }
+    .list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .list li:last-child {
+      border-bottom: none;
+    }
+    .list .rank {
+      font-weight: 600;
+      color: #6b7280;
+      width: 2rem;
+    }
+    .list .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex: 1;
+    }
+    .list .user-info img {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .list .user-info .name {
+      font-weight: 500;
+      color: #111827;
+    }
+    .list .points {
+      font-weight: 600;
+      color: #111827;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .list .points svg {
+      width: 1rem;
+      height: 1rem;
+      fill: #f59e0b;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 2rem;
+    }
+    .pagination a {
+      padding: 0.5rem 0.75rem;
+      background: #fff;
+      border-radius: 0.375rem;
+      text-decoration: none;
+      color: inherit;
+      border: 1px solid transparent;
+    }
+    .pagination a.active,
+    .pagination a:hover {
+      background: #5c6ac4;
+      color: #fff;
+      border-color: #5c6ac4;
+    }
+
+    /* Footer (reuse) */
+    .footer {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #9ca3af;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Navbar -->
+    <header class="topnav">
+      <div class="logo">&lt;/&gt; CodeQuest</div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="get-feedback.html">Get Feedback</a>
+        <a href="review-code.html">Review Code</a>
+        <a href="{{ url_for('leaderboard') }}" class="active">Leaderboard</a>
+      </nav>
+      <div class="profile"></div>
+    </header>
+
+    <!-- Top‑3 Leaderboard -->
+    <section class="top-three">
+      {# loop through first three users #}
+      {% for user in users[:3] %}
+      <div class="card{% if loop.index0 == 1 %} center{% endif %}">
+        <div class="rank-badge">{{ loop.index }}</div>
+        <img src="assets/profile2.png" alt="{{ user.username }}" class="avatar">
+        <div class="name">{{ user.username }}</div>
+        <div class="points">{{ "{:,}".format(user.points) }} points</div>
+      </div>
+      {% endfor %}
+    </section>
+
+    <!-- Ranks #4–#7 -->
+    <ul class="list">
+      {% for user in users[3:7] %}
+      <li>
+        <div class="rank">#{{ loop.index + 3 }}</div>
+        <div class="user-info">
+          <img src="assets/profile.png" alt="{{ user.username }}">
+          <div class="name">{{ user.username }}</div>
+        </div>
+        <div class="points">
+          {{ "{:,}".format(user.points) }}
+          <svg>…star icon…</svg>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.18 3.628a1 1 0 00.95.69h3.812c.969 0 1.371 1.24.588 1.81l-3.083 2.24a1 1 0 00-.364 1.118l1.18 3.628c.3.921-.755 1.688-1.54 1.118l-3.083-2.24a1 1 0 00-1.175 0l-3.083 2.24c-.784.57-1.838-.197-1.54-1.118l1.18-3.628a1 1 0 00-.364-1.118L2.518 8.055c-.783-.57-.38-1.81.588-1.81h3.812a1 1 0 00.95-.69l1.18-3.628z"/>
+          </svg>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <a href="#" class="active">1</a>
+      <a href="#">2</a>
+      <a href="#">3</a>
+      <span>…</span>
+      <a href="#">13</a>
+      <a href="#">14</a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      © 2025 CodeQuest. All rights reserved.
+    </footer>
+  </div>
+</body>
+</html>
