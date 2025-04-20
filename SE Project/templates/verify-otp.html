@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CodeQuest – Verify OTP</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .otp-container {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 1rem 0 0.5rem;
+    }
+    .otp-container input {
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 50%;
+      text-align: center;
+      font-size: 1rem;
+      outline: none;
+    }
+    .otp-container input:focus {
+      border-color: #5c6ac4;
+      box-shadow: 0 0 0 2px rgba(92,106,196,0.3);
+    }
+    .resend {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+    }
+    .resend a {
+      color: #5c6ac4;
+      text-decoration: none;
+      margin-left: 0.25rem;
+    }
+    .resend a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body class="auth-page">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container">
+        {% for category, msg in messages %}
+          <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <div class="card">
+    <div class="code-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="16 18 22 12 16 6"></polyline>
+        <polyline points="8 6 2 12 8 18"></polyline>
+      </svg>
+    </div>
+
+    <div class="header">
+      <h1>Forgot Password</h1>
+      <p>Enter OTP Verification Code</p>
+    </div>
+
+    <form action="{{ url_for('verify_otp') }}" method="post" id="verifyForm" class="form">
+      <div class="otp-container">
+        <input type="text" name="otp1" maxlength="1" inputmode="numeric" pattern="\d*" required>
+        <input type="text" name="otp2" maxlength="1" inputmode="numeric" pattern="\d*" required>
+        <input type="text" name="otp3" maxlength="1" inputmode="numeric" pattern="\d*" required>
+        <input type="text" name="otp4" maxlength="1" inputmode="numeric" pattern="\d*" required>
+      </div>
+
+      <div class="resend">
+        Didn’t receive a code? <a href="{{ url_for('forgot_password') }}">Resend</a>
+      </div>
+
+      <button type="submit" class="btn-primary">Sign in</button>
+    </form>
+
+    <div class="divider"><span>Or continue with</span></div>
+
+    <div class="oauth-container">
+      <button onclick="oauth('GitHub')" class="btn-oauth">
+        <img src="assets/github.svg" alt="GitHub" class="icon"> GitHub
+      </button>
+      <button onclick="oauth('GitLab')" class="btn-oauth">
+        <img src="assets/gitlab.svg" alt="GitLab" class="icon"> GitLab
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // auto-focus
+    const inputs = document.querySelectorAll('.otp-container input');
+    inputs.forEach((input,i) => {
+      input.addEventListener('input', () => {
+        if (input.value && i < inputs.length-1) inputs[i+1].focus();
+      });
+    });
+  </script>
+</body>
+</html>
