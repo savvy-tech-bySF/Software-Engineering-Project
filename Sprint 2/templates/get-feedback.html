@@ -157,9 +157,9 @@
     <header class="topnav">
       <div class="logo">&lt;/&gt; CodeQuest</div>
       <nav>
-        <a href="dashboard.html">Dashboard</a>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
         <a href="get-feedback.html" class="active">Get Feedback</a>
-        <a href="review-code.html">Review Code</a>
+        <a href="{{ url_for('review_code') }}"           class="text-indigo-600 font-medium">Review Code</a>
         <a href="leaderboard.html">Leaderboard</a>
       </nav>
       <div class="profile"></div>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CodeQuest – Review Code</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/heroicons@2.0.13/dist/heroicons.min.js"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <div class="max-w-7xl mx-auto py-8 px-4">
+    <!-- Top Nav -->
+    <header class="flex items-center justify-between mb-12">
+      <div class="text-2xl font-bold">&lt;/&gt; CodeQuest</div>
+      <nav class="space-x-8">
+        <a href="{{ url_for('dashboard') }}" class="text-gray-600 hover:text-gray-900">Dashboard</a>
+        <a href="/get-feedback.html" class="text-gray-600 hover:text-gray-900">Get Feedback</a>
+        <a href="{{ url_for('review_code') }}"           class="text-indigo-600 font-medium">Review Code</a>
+        <a href="/leaderboard.html" class="text-gray-600 hover:text-gray-900">Leaderboard</a>
+      </nav>
+      <div><!-- profile avatar here --></div>
+    </header>
+
+    <!-- Sort -->
+    <div class="flex justify-end mb-6">
+      <label for="sort-select" class="mr-2 text-sm text-gray-700">Sort by:</label>
+      <select id="sort-select" onchange="location.href='?sort='+this.value"
+              class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
+        <option value="latest" {% if sort=='latest' %}selected{% endif %}>Latest First</option>
+        <option value="oldest" {% if sort=='oldest' %}selected{% endif %}>Oldest First</option>
+      </select>
+    </div>
+
+    <!-- PR Cards -->
+    {% for pr in prs %}
+    <div class="bg-white border border-gray-200 rounded-2xl p-6 mb-6 shadow-sm">
+      <div class="flex justify-between items-start">
+        <div class="flex items-center space-x-4">
+          <img class="w-10 h-10" src="/static/icons/{{ pr.platform }}.svg" alt="{{ pr.platform }}">
+          <div>
+            <h3 class="text-lg font-semibold">{{ pr.title or pr.pr_id }}</h3>
+            <p class="text-sm text-gray-500">by {{ pr.username }} · 2 hours ago</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-6 text-sm text-gray-500">
+          <!-- lines icon -->
+          <div class="flex items-center space-x-1">
+            <svg class="w-5 h-5"><use href="#icon-lines"/></svg>
+            <span>{{ pr.lines }} lines</span>
+          </div>
+          <!-- comments icon -->
+          <div class="flex items-center space-x-1">
+            <svg class="w-5 h-5"><use href="#icon-comments"/></svg>
+            <span>{{ pr.comments }} comments</span>
+          </div>
+          <span class="bg-green-100 text-green-700 rounded-full px-3 py-1 text-xs">+{{ pr.points }} pts</span>
+          <a href="{{ url_for('review_pr', pr_id=pr.id) }}"
+             class="bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg px-4 py-2 text-sm font-medium">
+            Review
+          </a>
+        </div>
+      </div>
+      {% if pr.snippet %}
+      <pre class="bg-gray-100 rounded-lg mt-4 p-4 overflow-x-auto text-sm">
+{{ pr.snippet }}
+      </pre>
+      {% endif %}
+    </div>
+    {% else %}
+      <p class="text-center text-gray-500">No pull requests available for review.</p>
+    {% endfor %}
+
+    <!-- Pagination -->
+    <div class="flex justify-center space-x-2 mt-8 text-gray-500">
+      {% for p in pages %}
+        <a href="?page={{ p }}&sort={{ sort }}"
+           class="px-3 py-1 rounded-lg {{ 'bg-indigo-100 text-indigo-600 font-semibold' if p==current_page else 'hover:bg-gray-200' }}">
+          {{ p }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>

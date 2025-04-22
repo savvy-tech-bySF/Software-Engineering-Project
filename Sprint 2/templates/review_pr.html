@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CodeQuest – Submit Review</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <div class="max-w-7xl mx-auto py-8 px-4">
+        <!-- Top Nav -->
+        <header class="flex items-center justify-between mb-12">
+          <div class="text-2xl font-bold">&lt;/&gt; CodeQuest</div>
+          <nav class="space-x-8">
+            <a href="{{ url_for('dashboard') }}" class="text-gray-600 hover:text-gray-900">Dashboard</a>
+            <a href="/get-feedback.html" class="text-gray-600 hover:text-gray-900">Get Feedback</a>
+            <a href="{{ url_for('review_code') }}" class="text-indigo-600 font-medium">Review Code</a>
+            <a href="/leaderboard.html" class="text-gray-600 hover:text-gray-900">Leaderboard</a>
+          </nav>
+          <div><!-- profile avatar here --></div>
+        </header>
+    </div>
+  <div class="max-w-7xl mx-auto py-8 px-4 flex space-x-8">
+    <!-- Left Column: PR Detail (scrollable) -->
+    <div class="flex-1 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm overflow-y-auto" style="max-height: 80vh;">
+        <div class="flex justify-between items-center mb-6">
+            <div>
+              <h2 class="text-2xl font-semibold">{{ pr.pr_id }}</h2>
+              <p class="text-sm text-gray-500">by {{ pr.username }} · {{ pr.created_at }}</p>
+            </div>
+            <a href="{{ pr.repo_url }}" target="_blank"
+               class="text-indigo-600 hover:underline text-sm font-medium">
+              View Repo
+            </a>
+        </div>
+        <!-- code preview -->
+        {% if snippet %}
+        <pre class="bg-gray-100 rounded-lg p-4 overflow-x-auto text-sm">
+        {{ snippet }}
+        </pre>
+        {% else %}
+        <p class="text-gray-600">{{ pr.description or "No description provided." }}</p>
+        {% endif %}
+
+        <!-- List of Files -->
+        <ul id="fileList">
+            {% for file in files %}
+                <li>
+                    <!-- Ensure the full relative path is passed to loadFile with proper normalization -->
+                    <button onclick="loadFile('{{ file|replace('\\', '/') }}')" class="text-blue-600 hover:underline">
+                        {{ file }}
+                    </button>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <!-- Code Viewer Section -->
+        <div id="codeViewer" class="mt-6 bg-gray-100 p-4 rounded-lg overflow-x-auto text-sm text-gray-800">
+            <pre><code id="codeContent"></code></pre>
+        </div>
+
+    </div>
+
+    <!-- Right Column: Sticky Sidebar for Review -->
+    <div class="w-80 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm space-y-6 sticky top-8">
+      <h3 class="text-xl font-semibold">Add Review</h3>
+      <form action="{{ url_for('submit_review') }}" method="POST" class="space-y-4">
+        <input type="hidden" name="pr_id" value="{{ pr.id }}">
+        <textarea name="review" rows="5" placeholder="Add your code review comments…" required
+                  class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"></textarea>
+    
+        <div>
+            <label class="block text-sm font-medium mb-1">Score (1-5)</label>
+            <input type="number" name="score" min="1" max="10" required class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300" />
+        </div>
+    
+        <!-- Score Stars (Optional for aesthetic purposes) -->
+        <div class="flex space-x-1">
+            <!-- You can replace these with actual clickable stars -->
+            <svg class="w-6 h-6 text-gray-300 cursor-pointer"><use href="#icon-star"/></svg>
+            <svg class="w-6 h-6 text-gray-300 cursor-pointer"><use href="#icon-star"/></svg>
+            <svg class="w-6 h-6 text-gray-300 cursor-pointer"><use href="#icon-star"/></svg>
+            <svg class="w-6 h-6 text-gray-300 cursor-pointer"><use href="#icon-star"/></svg>
+            <svg class="w-6 h-6 text-gray-300 cursor-pointer"><use href="#icon-star"/></svg>
+        </div>
+    
+        <button type="submit"
+                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg py-2 font-medium">
+            Submit Review
+        </button>
+    </form>
+    
+      <div class="pt-4 border-t border-gray-200">
+        <h4 class="text-sm font-medium mb-2">Review Guidelines</h4>
+        <ul class="list-disc list-inside text-sm text-gray-600 space-y-1">
+          <li>Minimum 1 comment per 100 lines</li>
+          <li>Be constructive and specific</li>
+          <li>Suggest improvements</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function loadFile(filePath) {
+        // Normalize path separators for the backend (use '/' for URL paths)
+        const normalizedPath = filePath.replace(/\\/g, '/'); // Replaces any backslashes with forward slashes
+    
+        // Pass the correctly formatted file path to the backend
+        fetch(`/load-file?path=${encodeURIComponent(normalizedPath)}&repo={{ pr.repo_name }}`)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                return res.json();
+            })
+            .then(data => {
+                // Display the file content in the code viewer
+                const codeContent = document.getElementById("codeContent");
+                if (codeContent) {
+                    codeContent.textContent = data.content || "Failed to load file."; // Preserve formatting
+                } else {
+                    console.error("Error: codeContent element not found");
+                }
+            })
+            .catch(error => {
+                console.error("Error loading file:", error);
+                const codeContent = document.getElementById("codeContent");
+                if (codeContent) {
+                    codeContent.textContent = "Error loading file.";
+                }
+            });
+    }
+    console.log("PR ID passed to form: {{ pr.id }}");
+  </script>
+</body>
+</html>
